@@ -1,0 +1,15 @@
+package set;
+
+public class Unique {
+	public static int[] uniqueElements(int[] ints) {
+		MaxSet<Integer> set = new MaxSet<Integer>();
+		
+		for(int i : ints) {
+			set.add(i);
+		}
+		
+		
+		
+		return new int[1];
+	}
+}

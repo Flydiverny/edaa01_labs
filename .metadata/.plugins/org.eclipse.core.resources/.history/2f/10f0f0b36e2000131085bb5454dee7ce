@@ -1,0 +1,28 @@
+package test;
+
+import static org.junit.Assert.fail;
+
+import java.util.NoSuchElementException;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import set.MaxSet;
+
+public class TestUniqueElements {
+	int[] ints = {7, 5, 3, 5, 2, 2, 7 };
+	
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public final void testUniqueElements() {
+		
+	}
+}

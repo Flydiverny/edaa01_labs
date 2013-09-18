@@ -1,0 +1,27 @@
+package set;
+
+import java.util.Arrays;
+import java.util.Iterator;
+
+public class Unique {
+	public static int[] uniqueElements(int[] ints) {
+		MaxSet<Integer> set = new MaxSet<Integer>();
+		
+		for(int i : ints) {
+			set.add(i);
+		}
+		
+		Arrays.sort(ints);
+				
+		
+		int[] output = new int[set.size()];
+		int i = 0;
+		
+		Iterator<Integer> itr = set.iterator();
+		while(itr.hasNext()) {
+			output[i++] = itr.next();
+		}
+		
+		return output;
+	}
+}
