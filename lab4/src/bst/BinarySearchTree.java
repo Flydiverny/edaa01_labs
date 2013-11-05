@@ -1,5 +1,7 @@
 package bst;
 
+import org.junit.runner.notification.StoppedByUserException;
+
 public class BinarySearchTree<E extends Comparable<? super E>> {
 	BinaryNode<E> root;
     int size;
@@ -101,25 +103,29 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	 * Print tree contents in inorder.
 	 */
 	public void printTree() {
-		System.out.println("Tree: " + printTree(root));
+		//System.out.println("Tree: " + printTree(root));
+		printTree(root);
 	}
 	
-	private String printTree(BinaryNode<E> node) {
+	private void printTree(BinaryNode<E> node) {
 		if(node == null) {
-			return "";
+			return;
 		}
 		
-		return "(" + printTree(node.left) + node.element + printTree(node.right) + ")";
+		System.out.print("(");
+		printTree(node.left);
+		System.out.print(node.element);
+		printTree(node.right);
 	}
 
 	/** 
 	 * Builds a complete tree from the elements in the tree.
 	 */
-	public void rebuild() {
+	public void rebuild() { 
 		E[] a = (E[]) new Comparable[size()];
 		toArray(root, a, 0);
 		
-		root = buildTree(a, 0, a.length -1 );
+		root = buildTree2(a, 0, a.length-1);
 	}
 	
 	/*
@@ -144,30 +150,42 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	 * Elements in the array a are assumed to be in ascending order.
 	 * Returns the root of tree.
 	 */
-	private BinaryNode<E> buildTree(E[] a, int first, int last) {
+	private BinaryNode<E> buildTree2(E[] a, int first, int last) {
 		BinaryNode<E> node;
 		
 		switch(last-first) {
 		case 0:
-			node = new BinaryNode<E>(a[first]);
-			break;
+			return new BinaryNode<E>(a[first]);
 		case -1:
 			node = new BinaryNode<E>(a[first]);
             node.right = new BinaryNode<E>(a[last]);
-            break;
+            return node;
 		case 1:
 			node = new BinaryNode<E>(a[last]);
             node.left = new BinaryNode<E>(a[first]);
-            break;
+            return node;
         default:
             int mid = (first+last)/2;
         	node = new BinaryNode<E>(a[mid]);
         	node.left = buildTree(a, first, mid-1);
         	node.right = buildTree(a, mid+1, last);
-        	break;
+        	return node;
 		}
-		
-		return node;
+	}
+	
+	private BinaryNode<E> buildTree(E[] a, int first, int last) {
+        if(first == last)
+            return new BinaryNode<E>(a[first]);
+        
+        int mid = (last + first + 1) / 2;
+
+        BinaryNode<E> node = new BinaryNode<E>(a[mid]);
+        node.left = buildTree(a, first, mid-1);        
+
+        if(mid != last)
+            node.right = buildTree(a, mid+1, last);
+    
+        return node;
 	}
 	
 
