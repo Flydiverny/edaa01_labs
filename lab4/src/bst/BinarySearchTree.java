@@ -1,6 +1,5 @@
 package bst;
 
-import org.junit.runner.notification.StoppedByUserException;
 
 public class BinarySearchTree<E extends Comparable<? super E>> {
 	BinaryNode<E> root;
@@ -91,19 +90,18 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	 * @param node
 	 * @return
 	 */
-	private int size(BinaryNode<E> node) {
+	/*private int size(BinaryNode<E> node) {
 		if(node == null) {
 			return 0;
 		}
 		
 		return 1 + size(node.left) + size(node.right);
-	}
+	}*/
 	
 	/**
 	 * Print tree contents in inorder.
 	 */
 	public void printTree() {
-		//System.out.println("Tree: " + printTree(root));
 		printTree(root);
 	}
 	
@@ -112,9 +110,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 			return;
 		}
 		
-		System.out.print("(");
 		printTree(node.left);
-		System.out.print(node.element);
+		System.out.print(node.element + " ");
 		printTree(node.right);
 	}
 
@@ -125,7 +122,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		E[] a = (E[]) new Comparable[size()];
 		toArray(root, a, 0);
 		
-		root = buildTree2(a, 0, a.length-1);
+		root = buildTree(a, 0, a.length-1);
 	}
 	
 	/*
@@ -150,7 +147,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	 * Elements in the array a are assumed to be in ascending order.
 	 * Returns the root of tree.
 	 */
-	private BinaryNode<E> buildTree2(E[] a, int first, int last) {
+	private BinaryNode<E> buildTree3(E[] a, int first, int last) {
 		BinaryNode<E> node;
 		
 		switch(last-first) {
@@ -172,8 +169,24 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         	return node;
 		}
 	}
-	
+
 	private BinaryNode<E> buildTree(E[] a, int first, int last) {
+		if(last-first < 0)
+			return null;
+		
+		if(last == first)
+			return new BinaryNode<E>(a[first]);
+		
+		int mid = (first+last)/2;
+		BinaryNode<E> node = new BinaryNode<E>(a[mid]);
+		node.left = buildTree(a, first, mid-1);
+		node.right = buildTree(a, mid+1, last);
+		
+		return node;
+	}
+	
+	/*
+	private BinaryNode<E> buildTree2(E[] a, int first, int last) {
         if(first == last)
             return new BinaryNode<E>(a[first]);
         
@@ -187,8 +200,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     
         return node;
 	}
-	
-
+	*/
 
 	static class BinaryNode<E> {
 		E element;
@@ -198,6 +210,5 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		private BinaryNode(E element) {
 			this.element = element;
 		}	
-	}
-	
+	}	
 }
