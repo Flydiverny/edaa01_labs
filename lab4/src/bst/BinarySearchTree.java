@@ -51,6 +51,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
 		if(node.right == null) {
 			node.right = new BinaryNode<E>(e);
+			
 			return true;
 		}
 		
