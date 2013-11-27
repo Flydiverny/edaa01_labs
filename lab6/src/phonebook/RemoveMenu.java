@@ -14,6 +14,17 @@ public class RemoveMenu extends JMenuItem implements ActionListener {
 	}
 	
 	 public void actionPerformed(ActionEvent e) {
-		
+		 String name = JOptionPane.showInputDialog("Enter name");
+		 
+		 if(name == null) {
+			 return;
+		 }
+		 
+		 if(phoneBook.remove(name)) {
+			 gui.setMessageArea("HEN(not a hen) WAS DELETED");
+		 } else {
+			 gui.setMessageArea("Can't delete nonexistent aliens.");
+		 }
+		 
 	 }
 }

@@ -1,11 +1,15 @@
 package phonebook;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class PhoneBook {
-	private Map<String,LinkedList<String>> phoneBook;
+	private Map<String, LinkedList<String>> phoneBook;
 	
 	public PhoneBook() {
-		
+		phoneBook = new HashMap<String, LinkedList<String>>();
 	}
 	
 	
@@ -20,7 +24,13 @@ public class PhoneBook {
 	 * @param number The number associated with the specified name
 	 */
 	public void put(String name, String number) {
-		
+		if(phoneBook.containsKey(name)) {
+			phoneBook.get(name).add(number);
+		} else {
+			LinkedList<String> numbers = new LinkedList<String>();
+			numbers.add(number);
+			phoneBook.put(name, numbers);
+		}
 	}
 	
 	
@@ -33,7 +43,9 @@ public class PhoneBook {
 	 * @return true if the specified name was present.
 	 */
 	public boolean remove(String name) {
-		return false;
+		LinkedList<String> list = phoneBook.remove(name);
+		// DID IT WORK? :D
+		return list == null ? false : true;
 	}
 	
 	/**
@@ -44,7 +56,13 @@ public class PhoneBook {
 	 * @return The phone numbers associated with the specified name
 	 */
 	public List<String> findNumber(String name) {
-		return null;
+		List<String> list = phoneBook.get(name);
+		
+		if(list == null) {
+			return new LinkedList<String>();
+		}
+		
+		return list;
 	}
 	
 	/**
@@ -56,8 +74,24 @@ public class PhoneBook {
 	 * @return The list of names associated with the specified number.
 	 */
 	public List<String> findNames(String number) {
-		return null;
+		LinkedList<String> names = new LinkedList<String>();
+		
+		Set<Map.Entry<String,LinkedList<String>>> sets = phoneBook.entrySet();
+		Iterator<Map.Entry<String,LinkedList<String>>> itr = sets.iterator();
+		
+		while(itr.hasNext()) {
+			Map.Entry<String,LinkedList<String>> entry = itr.next();
+			
+			for(String nbr : entry.getValue()) {
+				if(nbr.equals(number)) {
+					names.add(entry.getKey());
+				}
+			}
+		}
+		
+		return names;
 	}
+	
 	
 	/**
 	 * Retrieves the set of all names present in this phone book.
@@ -65,7 +99,7 @@ public class PhoneBook {
 	 * @return The set of all names present in this phone book
 	 */
 	public Set<String> names() {
-		return null;
+		return phoneBook.keySet();
 	}
 	
 	/**
@@ -73,7 +107,7 @@ public class PhoneBook {
 	 * @return true if this phone book is empty
 	 */	
 	public boolean isEmpty() {
-		return true;
+		return phoneBook.isEmpty();
 	}
 	
 	/**
@@ -81,7 +115,27 @@ public class PhoneBook {
 	 * @return The number of names in this phone book
 	 */
 	public int size() {
-		return 0;
+		return phoneBook.size();
 	}
 
+	
+	public void writeToFile(String fileName) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
+			out.writeObject(phoneBook);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+	
+	public void readFromFile(String fileName) {
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+			phoneBook = (Map<String, LinkedList<String>>) in.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
 }

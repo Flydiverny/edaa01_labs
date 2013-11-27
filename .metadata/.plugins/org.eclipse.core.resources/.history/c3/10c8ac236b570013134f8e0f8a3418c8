@@ -1,0 +1,30 @@
+package phonebook;
+import javax.swing.*;
+
+import java.awt.event.*;
+import java.io.File;
+
+
+public class QuitButton extends JButton implements ActionListener {
+	private PhoneBook phoneBook;
+	private PhoneBookGUI gui;
+
+	public QuitButton(PhoneBook phoneBook, PhoneBookGUI gui) {
+		super("Quit");
+		this.phoneBook = phoneBook;
+		this.gui = gui;
+		addActionListener(this);
+	}
+	
+	 public void actionPerformed(ActionEvent e) {
+		//Create a file chooser
+		JFileChooser fc = new JFileChooser();
+		int returnValue = fc.showSaveDialog(parent)(gui);
+		
+		if(returnValue == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			phoneBook.writeToFile(file.getAbsolutePath());
+			System.exit(0);
+		}
+	 }
+}

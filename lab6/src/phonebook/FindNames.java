@@ -1,0 +1,40 @@
+package phonebook;
+import javax.swing.*;
+
+import java.awt.event.*;
+import java.util.List;
+
+public class FindNames extends JMenuItem implements ActionListener {
+	private PhoneBook phoneBook;
+	private PhoneBookGUI gui;
+	
+	public FindNames(PhoneBook phoneBook, PhoneBookGUI gui) {
+		super("Find name(s)");
+		this.phoneBook = phoneBook;
+		this.gui = gui;
+		addActionListener(this);
+	}
+	
+	 public void actionPerformed(ActionEvent e) {
+		 String nbr = JOptionPane.showInputDialog("Enter number");
+		 
+		 if(nbr == null) {
+			 return;
+		 }
+		 
+		 
+		 List<String> names = phoneBook.findNames(nbr);
+		 
+		 StringBuilder output = new StringBuilder();
+		 
+		 for(String name : names) {
+			 output.append(name + "\n");
+		 }
+		 
+		 if(output.length() == 0) {
+			 gui.setMessageArea("NO HITS AT ALL!! on nbr: " + nbr);
+		 } else {
+		 	 gui.setMessageArea(output.toString());
+		 }
+	 }
+}

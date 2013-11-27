@@ -1,0 +1,19 @@
+package phonebook;
+import javax.swing.*;
+import java.awt.event.*;
+
+public class FindNumbers extends JMenuItem implements ActionListener {
+	private PhoneBook phoneBook;
+	private PhoneBookGUI gui;
+	
+	public FindNumbers(PhoneBook phoneBook, PhoneBookGUI gui) {
+		super("Remove");
+		this.phoneBook = phoneBook;
+		this.gui = gui;
+		addActionListener(this);
+	}
+	
+	 public void actionPerformed(ActionEvent e) {
+		
+	 }
+}
