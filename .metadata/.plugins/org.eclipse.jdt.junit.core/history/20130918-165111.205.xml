@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="TestUniqueElements" project="lab1" tests="2" started="2" failures="0" errors="0" ignored="0">
-  <testsuite name="test.TestUniqueElements" time="0.242">
-    <testcase name="testUniqueElementsArraySort" classname="test.TestUniqueElements" time="0.073"/>
-    <testcase name="testUniqueElements" classname="test.TestUniqueElements" time="0.169"/>
-  </testsuite>
-</testrun>

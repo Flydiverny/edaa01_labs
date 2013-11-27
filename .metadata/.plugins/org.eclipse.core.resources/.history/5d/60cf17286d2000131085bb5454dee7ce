@@ -1,8 +1,0 @@
-package set;
-
-public class Unique {
-	public static int[] uniqueElements(int[] ints) {
-		
-		return new int[];
-	}
-}
